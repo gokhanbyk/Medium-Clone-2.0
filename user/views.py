@@ -23,4 +23,6 @@ def login_view(request):
     return render(request, 'user/login.html', context)
 
 def logout_view(request):
-    pass
+    messages.info(request, f'{request.user.username} Oturum Kapatıldı')    
+    logout(request)
+    return redirect('home_view')   
