@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from slugify import slugify
+from .models import Profile
 
 # Create your views here.
 
@@ -62,7 +64,22 @@ def register_view(request):
                 return redirect('home_view')
             messages.warning(request, f'{email} adresi sistemde kayitli ama login olmadiniz.. Login sayfasina yönlendiriliyorsunuz')
             return redirect('user:login_view')
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.set_password(password)
+        
+        profile, profile_created = Profile.objects.get_or_create(user = user)
+        profile.instagram = instagram
+        profile.slug = slugify(f'{first_name}-{last_name}')
+        
+        user.save()
+        profile.save()
 
+        messages.success(request, f'{user.first_name} sisteme kaydedildiniz..')
+        user = authenticate(request, username = email, password = password)
+        login(request, user)
+        return redirect('home_view')
 
     context = dict()
     return render(request, 'user/register.html', context)
