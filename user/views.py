@@ -13,6 +13,10 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        if len(username) < 6 or len(password) < 6:
+            messages.warning(request, f'lütfen kullanici adi veya sifreyi dogru giriniz.. 6 karakterden küçük olamaz')
+            return redirect('user:login_view')
+
         user = authenticate(request, username = username, password = password)
         if user is not None:
             login(request, user)
@@ -26,3 +30,11 @@ def logout_view(request):
     messages.info(request, f'{request.user.username} Oturum Kapatıldı')    
     logout(request)
     return redirect('home_view')   
+
+def register_view(request):
+    if request.method == 'POST':
+        pass
+
+
+    context = dict()
+    return render(request, 'user/register.html', context)
