@@ -45,6 +45,8 @@ THIRD_PARTY_APPS = [
     
 MY_APPS = [
     'page',
+    'user',
+    'blog',
 ]
 
 INSTALLED_APPS = BASE_APPS + THIRD_PARTY_APPS + MY_APPS
