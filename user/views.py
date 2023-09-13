@@ -33,7 +33,16 @@ def logout_view(request):
 
 def register_view(request):
     if request.method == 'POST':
-        pass
+        post_info = request.POST
+        email = post_info.get('email')
+        email_confirm = post_info.get('email_confirm')
+        first_name = post_info.get('first_name')
+        last_name = post_info.get('last_Name')
+        password = post_info.get('password')
+        password_confirm = post_info.get('password_confirm')
+        instagram = post_info.get('instagram')
+
+        
 
 
     context = dict()
