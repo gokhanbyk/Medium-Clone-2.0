@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -37,12 +38,30 @@ def register_view(request):
         email = post_info.get('email')
         email_confirm = post_info.get('email_confirm')
         first_name = post_info.get('first_name')
-        last_name = post_info.get('last_Name')
+        last_name = post_info.get('last_name')
         password = post_info.get('password')
         password_confirm = post_info.get('password_confirm')
         instagram = post_info.get('instagram')
 
+        if len(first_name) < 3 or len(last_name) < 3 or len(email) < 3 or len(password) < 3:
+            messages.warning(request, 'Bilgiler en az 3 karakterden oluşmalı')
+            return redirect('user:register_view')
+        if email != email_confirm:
+            messages.warning(request, 'Lütfen email bilgisini doğru giriniz')
+            return redirect('user:register_view')
+        if password != password_confirm:
+            messages.warning(request, 'Lütfen şifre bilgisini doğru giriniz')
+            return redirect('user:register_view')
         
+        user, created = User.objects.get_or_create(username = email) 
+        if not created:
+            user = authenticate(request, username = email, password = password)
+            if user is not None:
+                messages.success(request, 'Daha önce kayit olmuşsunuz.. Ana Sayfaya Yönlendirildiniz..')
+                login(request, user)
+                return redirect('home_view')
+            messages.warning(request, f'{email} adresi sistemde kayitli ama login olmadiniz.. Login sayfasina yönlendiriliyorsunuz')
+            return redirect('user:login_view')
 
 
     context = dict()
