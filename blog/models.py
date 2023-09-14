@@ -20,7 +20,7 @@ class CommonModel(models.Model):
 
 class Category(CommonModel):
 
-    def _str__(self):
+    def __str__(self):
         return self.title
 
     # def get_absolute_url(self):
@@ -45,7 +45,7 @@ class Tag(CommonModel):
     #         }
     #     )
 
-class Post(CommonModel):
+class BlogPost(CommonModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     tag = models.ManyToManyField(Tag)

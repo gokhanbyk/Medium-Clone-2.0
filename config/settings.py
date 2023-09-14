@@ -40,7 +40,8 @@ BASE_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
     
 MY_APPS = [
@@ -143,3 +144,8 @@ MEDIA_ROOT = BASE_DIR / 'media_files'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# CRISPY:
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
