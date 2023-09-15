@@ -26,6 +26,8 @@ urlpatterns = [
 
     # User
     path('user/', include('user.urls', namespace='user')),
+    # Read
+    path('read/', include('read.urls', namespace='read')),
 
     # Blog
     path('blog/', include('blog.urls', namespace='blog')),
