@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from autoslug import AutoSlugField
+from django.urls import reverse
 
 # Create your models here.
 
@@ -11,3 +12,10 @@ class Profile(models.Model):
 
     slug = models.SlugField(max_length=200)
     
+    def get_absolute_url(self):
+        return reverse(
+            'read:all_posts_view',
+            kwargs= {
+                "user_slug": self.slug,
+            }
+        )
