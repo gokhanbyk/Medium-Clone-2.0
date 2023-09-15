@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .forms import *
 from .models import *
 import json
@@ -24,7 +25,8 @@ def create_blog_post_view(request):
                 value = item["value"]
                 tag_item, created = Tag.objects.get_or_create(title=value)
                 post.tag.add(tag_item)
-
+            messages.success(request, 'Blog postunuz basariyla kaydedildi..')
+            return redirect('home_view')
 
     context = dict(
         form = form
