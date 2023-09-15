@@ -4,8 +4,12 @@ from blog.models import *
 # Create your views here.
 
 def home_view(request):
-    posts = BlogPost.objects.filter(is_active=True).order_by('-created_at')
+    posts = BlogPost.objects.filter(is_active=True) # .order_by('-created_at')
+    tags = Tag.objects.filter(is_active=True) 
+    categories = Category.objects.filter(is_active=True) 
     context = dict(
-        posts = posts
+        posts = posts,
+        tags = tags,
+        categories = categories
     )
     return render(request, 'page/home_page.html', context)

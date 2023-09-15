@@ -24,6 +24,8 @@ def create_blog_post_view(request):
             for item in tags:
                 value = item["value"]
                 tag_item, created = Tag.objects.get_or_create(title=value.lower())
+                tag_item.is_active = True
+                tag_item.save()
                 post.tag.add(tag_item)
             messages.success(request, 'Blog postunuz basariyla kaydedildi..')
             return redirect('home_view')
