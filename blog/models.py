@@ -11,7 +11,7 @@ from tinymce import models as tinymce_models
 class CommonModel(models.Model):
     title = models.CharField(max_length=200)
     slug = AutoSlugField(populate_from = 'title', unique=True)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_ad = models.DateTimeField(auto_now=True)
 
