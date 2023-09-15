@@ -39,7 +39,7 @@ def profile_edit_view(request):
         form = form,
         title = title,
     )
-    return render(request, 'blog/form.html', context)
+    return render(request, 'comon_components/form.html', context)
 
 
 def login_view(request):
