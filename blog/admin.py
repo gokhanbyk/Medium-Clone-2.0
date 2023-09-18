@@ -3,6 +3,15 @@ from .models import *
 
 # Register your models here.
 
+@admin.register(UserPostFav)
+class UserPostFavAdmin(admin.ModelAdmin):
+    list_display = [
+        'pk',
+        'user',
+        'post',
+        'is_deleted',
+    ]
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [
