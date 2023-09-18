@@ -21,7 +21,7 @@ def fav_update(request):
             if not created:
                 post_fav.is_deleted =  not post_fav.is_deleted
                 post_fav.save()
-                
+
     
     return JsonResponse({'status': 200})
 
@@ -75,3 +75,37 @@ def category_view(request, category_slug):
     )
 
     return render(request, 'blog/post_list.html', context)
+
+login_required(login_url='user:login_view')
+def post_edit_view(request, post_slug):
+    
+    post = get_object_or_404(BlogPost, slug = post_slug)
+
+    if not post.user == request.user:
+        messages.warning(request, 'Bu Post Bilgisini Düzenleyemezsiniz!')
+        return redirect('home_view')
+    
+
+    title = post.title
+    form = BlogPostModelForm(instance=post)
+
+    if request.method == 'POST':
+        form = BlogPostModelForm(request.POST or None, request.FILES or None, instance=post)
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.save()
+            tags = json.loads(form.cleaned_data.get('tag'))
+            for item in tags:
+                tag_item, created = Tag.objects.get_or_create(title=item.get('value').lower())
+                tag_item.is_active = True
+                tag_item.save()
+                f.tag.add(tag_item)
+            messages.success(request, 'Blog Postunuz Basariyla Duzenlendi..')
+            return redirect('home_view')
+
+    context = dict(
+        title = title,
+        form = form
+    )
+
+    return render(request, 'comon_components/form.html', context)
