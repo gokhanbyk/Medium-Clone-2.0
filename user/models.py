@@ -21,3 +21,8 @@ class Profile(models.Model):
                 "user_slug": self.slug,
             }
         )
+    
+    def get_fav_url(self):
+        return reverse(
+            'user:show_user_fav_view'
+        )
