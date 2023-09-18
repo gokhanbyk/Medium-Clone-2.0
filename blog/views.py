@@ -1,12 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import *
 from .models import *
 import json
 
 
 # Create your views here.
+
+login_required(login_url='user:login_view')
+def fav_update(request):
+    if request.method == 'POST':
+        print(request.POST)
+    
+    return JsonResponse({'status': 200})
+
+
 
 login_required(login_url='user:login_view')
 def create_blog_post_view(request):
